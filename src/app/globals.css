@@ -1,0 +1,334 @@
+@import "tailwindcss";
+
+/* ── Core Theme — Light Monday.com ───────────────────────────────────────── */
+:root {
+  --background:   #F6F8FA;
+  --foreground:   #111111;
+  --accent:       #00CC00;       /* slightly darker green for text on white   */
+  --accent-vivid: #00FF00;       /* vivid green for badges / decorative       */
+  --accent-bg:    rgba(0,204,0,0.08);
+  --card-bg:      #FFFFFF;
+  --card-border:  #E1E4E8;
+  --muted:        #6B7280;
+  --muted-light:  #9CA3AF;
+  --sidebar-bg:   #FFFFFF;
+  --sidebar-w:    220px;
+  --danger:       #EF4444;
+  --warning:      #F97316;
+}
+
+@theme inline {
+  --color-background:     var(--background);
+  --color-foreground:     var(--foreground);
+  --color-vivid-green:    var(--accent);
+  --color-card-bg:        var(--card-bg);
+  --color-card-border:    var(--card-border);
+  --color-muted:          var(--muted);
+}
+
+/* ── Base ────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  background: var(--background);
+  color:      var(--foreground);
+  font-family: var(--font-geist-mono), ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
+  font-size:  14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Sidebar layout ──────────────────────────────────────────────────────── */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.app-sidebar {
+  width:      var(--sidebar-w);
+  min-width:  var(--sidebar-w);
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--card-border);
+  display:    flex;
+  flex-direction: column;
+  position:   sticky;
+  top:        0;
+  height:     100vh;
+  overflow-y: auto;
+  z-index:    40;
+}
+
+.app-content {
+  flex: 1;
+  min-width: 0;
+  padding: 32px;
+  max-width: 1200px;
+}
+
+/* ── Cards ───────────────────────────────────────────────────────────────── */
+.glow-card {
+  background:    var(--card-bg);
+  border:        1px solid var(--card-border);
+  border-radius: 12px;
+  transition:    box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.glow-card:hover {
+  border-color: rgba(0,204,0,0.35);
+  box-shadow:   0 0 0 3px rgba(0,204,0,0.07), 0 4px 16px rgba(0,0,0,0.06);
+}
+
+/* ── Metric Card ─────────────────────────────────────────────────────────── */
+.metric-card {
+  background:    var(--card-bg);
+  border:        1px solid var(--card-border);
+  border-radius: 16px;
+  position:      relative;
+  overflow:      hidden;
+}
+
+.metric-card::before {
+  content:      '';
+  position:     absolute;
+  top:          0; left: 0; right: 0;
+  height:       3px;
+  background:   linear-gradient(90deg, var(--accent), transparent);
+  border-radius: 16px 16px 0 0;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+.btn-primary {
+  display:        inline-flex;
+  align-items:    center;
+  gap:            8px;
+  background:     var(--accent);
+  color:          #fff;
+  border:         none;
+  border-radius:  8px;
+  padding:        10px 20px;
+  font-weight:    600;
+  font-size:      0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor:         pointer;
+  transition:     all 0.18s ease;
+}
+
+.btn-primary:hover {
+  background: #00aa00;
+  box-shadow: 0 4px 12px rgba(0,204,0,0.25);
+  transform:  translateY(-1px);
+}
+
+.btn-primary:active { transform: scale(0.97); }
+
+.btn-complete {
+  display:        inline-flex;
+  align-items:    center;
+  gap:            8px;
+  background:     var(--accent-bg);
+  border:         1px solid var(--accent);
+  color:          var(--accent);
+  border-radius:  8px;
+  padding:        10px 20px;
+  font-weight:    600;
+  font-size:      0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor:         pointer;
+  transition:     all 0.18s ease;
+  min-height:     44px;
+}
+
+.btn-complete:hover {
+  background: var(--accent);
+  color:      #fff;
+}
+
+.btn-complete:disabled {
+  opacity: 0.4;
+  cursor:  not-allowed;
+}
+
+/* ── Status Badges ───────────────────────────────────────────────────────── */
+.badge {
+  display:        inline-flex;
+  align-items:    center;
+  gap:            5px;
+  padding:        3px 10px;
+  border-radius:  4px;
+  font-size:      11px;
+  font-weight:    700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.badge-active {
+  background: rgba(0,200,117,0.12);
+  color:      #00a86b;
+}
+
+.badge-completed {
+  background: rgba(0,200,117,0.12);
+  color:      #00a86b;
+}
+
+.badge-pending {
+  background: rgba(249,115,22,0.1);
+  color:      #c2410c;
+}
+
+/* ── Sidebar nav link ────────────────────────────────────────────────────── */
+.nav-link {
+  display:        flex;
+  align-items:    center;
+  gap:            10px;
+  padding:        9px 16px;
+  border-radius:  8px;
+  font-size:      13px;
+  font-weight:    500;
+  color:          var(--muted);
+  text-decoration: none;
+  transition:     all 0.15s ease;
+}
+
+.nav-link:hover {
+  background: #F3F4F6;
+  color:      var(--foreground);
+}
+
+.nav-link.active {
+  background: var(--accent-bg);
+  color:      var(--accent);
+  font-weight: 600;
+}
+
+/* ── Data table ──────────────────────────────────────────────────────────── */
+.data-table {
+  width:           100%;
+  border-collapse: collapse;
+}
+
+.data-table th {
+  text-align:   left;
+  padding:      10px 16px;
+  font-size:    11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color:        var(--muted);
+  border-bottom: 1px solid var(--card-border);
+  background:   #FAFAFA;
+  font-weight:  600;
+}
+
+.data-table td {
+  padding:       12px 16px;
+  font-size:     13px;
+  border-bottom: 1px solid #F3F4F6;
+  color:         var(--foreground);
+}
+
+.data-table tr:hover td {
+  background: #FAFBFC;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #9CA3AF; }
+
+/* ── Pulse dot ───────────────────────────────────────────────────────────── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+.pulse-dot {
+  display:       inline-block;
+  width:         8px;
+  height:        8px;
+  border-radius: 50%;
+  background:    var(--accent);
+  animation:     pulse-dot 2s ease-in-out infinite;
+  flex-shrink:   0;
+}
+
+/* ── Skeleton ────────────────────────────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+.skeleton {
+  background:      linear-gradient(90deg, #F3F4F6 25%, #E5E7EB 50%, #F3F4F6 75%);
+  background-size: 200% 100%;
+  animation:       shimmer 1.4s infinite;
+  border-radius:   4px;
+}
+
+/* ── Modal overlay ───────────────────────────────────────────────────────── */
+.modal-backdrop {
+  position:        fixed;
+  inset:           0;
+  background:      rgba(0,0,0,0.35);
+  z-index:         100;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  padding:         20px;
+  backdrop-filter: blur(2px);
+}
+
+.modal-card {
+  background:    #fff;
+  border:        1px solid var(--card-border);
+  border-radius: 16px;
+  width:         100%;
+  max-width:     520px;
+  box-shadow:    0 20px 60px rgba(0,0,0,0.15);
+  animation:     modal-in 0.2s ease;
+}
+
+@keyframes modal-in {
+  from { opacity: 0; transform: scale(0.96) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ── Form inputs ─────────────────────────────────────────────────────────── */
+.form-input {
+  width:         100%;
+  padding:       9px 12px;
+  font-size:     13px;
+  border:        1px solid var(--card-border);
+  border-radius: 8px;
+  outline:       none;
+  background:    #fff;
+  color:         var(--foreground);
+  transition:    border-color 0.15s, box-shadow 0.15s;
+}
+
+.form-input:focus {
+  border-color: var(--accent);
+  box-shadow:   0 0 0 3px rgba(0,204,0,0.1);
+}
+
+.form-label {
+  display:     block;
+  font-size:   12px;
+  font-weight: 600;
+  color:       var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 5px;
+}
+
+/* ── Responsive: collapse sidebar on mobile ──────────────────────────────── */
+@media (max-width: 768px) {
+  .app-sidebar {
+    display: none;
+  }
+  .app-content {
+    padding: 16px;
+  }
+}
